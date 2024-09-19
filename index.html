@@ -1,16 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>proyecto 1 js</title>
-    <script defer src="entregable.js"></script>
+    <title>La Casa de las Milanesas</title>
+    <link rel="stylesheet" href="./diseñomila.css">
+    <script defer src="/entregable.js"></script>
 </head>
-<body>
-    <h1>
-        la casa de las milanesas
-    </h1>
-        
+
+<body class="pagina">
+   
+
+    <header class="header">
+        <div class="contenedor__logo">
+            <img class="logo" src="./img/logomila3.png" alt="logomila">
+        </div>
+        <div class="contenedor__titulo">
+            <h1 class="titulo">LA CASA DE LAS MILANESAS</h1>
+        </div>
+        <nav class="barrabusq">
+            <div class="nav-options">
+                <a href="index.html" class="nav-btn">Inicio</a>
+                <a href="#milanesasp" class="nav-btn">Productos</a>
+                <a href="paginas/calidad.html" class="nav-btn">Calidad</a>
+                <a href="paginas/sobreno.html" class="nav-btn">Sobre Nosotros</a>
+            </div>
+            <div class="nav-options">
+                <a href="paginas/crearcuen.html" class="nav-btn">Crear Cuenta</a>
+                <a href="/iniciar.html" class="nav-btn">Iniciar Sesión</a>
+            </div>
+        </nav>
+    </header>
     
+    <!-- Ventana del carrito -->
+<div id="carritoModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Carrito de Compras</h2>
+        <ul id="carrito-lista"></ul>
+        <p id="precio-total">Precio Total: $0</p>
+
+        <!-- Botón para enviar pedido -->
+        <button id="enviarPedidoBtn" class="btn">Enviar Pedido</button>
+
+        <button id="vaciar-carrito" class="btn">Vaciar Carrito</button>
+    </div>
+</div>
+
+<!-- Botón para abrir el carrito -->
+<button id="abrir-carrito" class="btn">Ver Carrito</button>
+
+<!-- Cuadro del cronómetro que aparece después de enviar pedido -->
+<div id="cronometro-cuadro" style="display: none;">
+    <p>Tiempo para que llegue el pedido:</p>
+    <span id="cronometro-tiempo"></span>
+</div>
+
+<div class="fondot">    
+    <main class="main">
+        
+        <div class="contenedor__carta">
+            <div class="carta">
+                <img class="imgmila" src="./img/milanesaDePollo.jpeg" alt="Milanesa de Pollo">
+                <div class="carta__contenido">
+                    <h3>Milanesa de Pollo</h3>
+                    <p>Milanesa jugosa y crujiente, preparada con pechuga de pollo de la mejor calidad.</p>
+                    <p class="carta__precio" data-precio="150">Precio: $300</p>
+                    <a href="#" class="btn">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor__carta">
+            <div class="carta">
+                <img class="imgmila" src="./img/milanesa de carne2.webp" alt="Milanesa de Carne">
+                <div class="carta__contenido">
+                    <h3>Milanesa de Carne</h3>
+                    <p>Clásica milanesa hecha con cortes seleccionados de carne vacuna.</p>
+                    <p class="carta__precio" data-precio="180">Precio: $350</p>
+                    <a href="#" class="btn">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor__carta">
+            <div class="carta">
+                <img class="imgmila" src="./img/milanesaDeTernera.jpg" alt="Milanesa de Ternera">
+                <div class="carta__contenido">
+                    <h3>Milanesa de Ternera</h3>
+                    <p>Una opción premium, preparada con ternera de primera calidad, suave y deliciosa.</p>
+                    <p class="carta__precio" data-precio="200">Precio: $400</p>
+                    <a href="#" class="btn">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor__carta">
+            <div class="carta">
+                <img class="imgmila" src="./img/milanesaNapoli.jpg" alt="Milanesa Napolitana">
+                <div class="carta__contenido">
+                    <h3>Milanesa Napolitana</h3>
+                    <p>Con queso derretido y salsa de tomate, un clásico irresistible.</p>
+                    <p class="carta__precio" data-precio="220">Precio: $450</p>
+                    <a href="#" class="btn">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor__carta">
+            <div class="carta">
+                <img class="imgmila" src="./img/milanesaRiojana.jpeg" alt="Milanesa Riojana">
+                <div class="carta__contenido">
+                    <h3>Milanesa Riojana</h3>
+                    <p>Milanesa con jamón, pimientos y huevo frito, al estilo riojano.</p>
+                    <p class="carta__precio" data-precio="250">Precio: $380</p>
+                    <a href="#" class="btn">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor__carta">
+            <div class="carta">
+                <img class="imgmila" src="./img/milanesa de cerdo.jpg" alt="Milanesa de Cerdo">
+                <div class="carta__contenido">
+                    <h3>Milanesa de Cerdo</h3>
+                    <p>Milanesa de cerdo, con un sabor intenso y una textura crujiente única.</p>
+                    <p class="carta__precio" data-precio="160">Precio: $320</p>
+                    <a href="#" class="btn">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <article id="milanesasp" class="article">
+        <div class="contenedor__carta milanesa-mas-pedida">
+            <div class="carta">
+                <img class="imgmila" src="./img/milanesaSuiza.jpg" alt="Milanesa Suiza">
+                <div class="carta__contenido">
+                    <h3>Milanesa más pedida: Suiza</h3>
+                    <p>Con un toque de queso suizo y especias, nuestra especialidad más solicitada.</p>
+                    <p class="carta__precio" data-precio="270">Precio: $500</p>
+                    <a href="#" class="btn">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+    <footer class="footer">
+        <div class="footer_marco">
+            <div class="contenido">
+                <h4 class="subrayado-con-espacio">Contacto</h4>
+                <ul>
+                    <li>Número: 33333333</li>
+                    <li>Email: ggggg@.com</li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ul>
+            </div>
+            <div class="contenido">
+                <h4 class="subrayado-con-espacio">Medios de Pago</h4>
+                <ul>
+                    <li>Mercado Pago</li>
+                    <li>Visa</li>
+                    <li>Cabal</li>
+                    <li>Cuenta DNI</li>
+                    <li>American Express</li>
+                    <li>Naranja</li>
+                </ul>
+            </div>
+            <div class="contenido">
+                <h4 class="subrayado-con-espacio">Dirección</h4>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1640.6316951540614!2d-58.41488547228212!3d-34.673301336827514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccc86e57132bf%3A0xb5c44f60d347e696!2sClub%20Social%20y%20Deportivo%20Juventud%20Unida!5e0!3m2!1ses!2sar!4v1695193521077!5m2!1ses!2sar"
+                    width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
