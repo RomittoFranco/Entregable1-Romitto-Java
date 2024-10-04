@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Casa de las Milanesas</title>
+    <link rel="stylesheet" href="../diseño/diseñomila.css">
+    <script defer src="../javascript/entregable.js"></script>
+</head>
+
+<body class="pagina">
+    <header class="header">
+        <div class="contenedor__logo">
+            <img class="logo" src="../img/logomila3.png" alt="logomila">
+        </div>
+        <div class="contenedor__titulo">
+            <h1 class="titulo">LA CASA DE LAS MILANESAS</h1>
+        </div>
+        <nav class="barrabusq">
+            <div class="nav-options">
+                <a href="index.html" class="nav-btn">Inicio</a>
+                <a href="#productos" class="nav-btn">Productos</a>
+                <a href="paginas/calidad.html" class="nav-btn">Calidad</a>
+                <a href="paginas/sobreno.html" class="nav-btn">Sobre Nosotros</a>
+            </div>
+            <div class="nav-options">
+                <a href="paginas/crearcuen.html" class="nav-btn">Crear Cuenta</a>
+                <a id="btnLogin" class="nav-btn">Iniciar Sesión</a>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Ventana del carrito -->
+    <div id="carritoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Carrito de Compras</h2>
+            <ul id="carrito-lista"></ul>
+            <p id="precio-total">Precio Total: $0</p>
+            <button id="enviarPedidoBtn" class="btn">Enviar Pedido</button>
+            <button id="vaciar-carrito" class="btn">Vaciar Carrito</button>
+        </div>
+    </div>
+
+    <!-- Boton para abrir el carrito -->
+    <button id="abrir-carrito" class="btn">Ver Carrito</button>
+
+    <!-- Cuadro del cronometro que aparece despues de enviar pedido -->
+    <div id="cronometro-cuadro" style="display: none;">
+        <p>Tiempo para que llegue el pedido:</p>
+        <span id="cronometro-tiempo"></span>
+    </div>
+
+    <div class="fondot">    
+        <main class="main" id="productos">
+            
+        </main>
+    </div>
+
+    <!-- Modal de Iniciar Sesion -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="btn">Iniciar Sesión</button>
+                <p id="loginError" style="color: red; display: none;">Correo o contraseña incorrectos.</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal de Confirmar Pedido -->
+<div id="confirmarPedidoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-confirm-modal">&times;</span>
+        <h2>Confirmar Pedido</h2>
+        <form id="confirmarPedidoForm">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" required>
+
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" required>
+
+            <label for="metodoPago">Método de Pago:</label>
+            <select id="metodoPago" name="metodoPago" required>
+                <option value="MercadoPago">MercadoPago</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Cabal">Cabal</option>
+                <option value="CuentaDNI">Cuenta DNI</option>
+                <option value="Naranja">Naranja</option>
+                <option value="AmericanExpress">American Express</option>
+            </select>
+
+            <p>Total: $<span id="pedidoTotal"></span></p>
+            <button type="submit" class="btn">Confirmar Pedido</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Tiempo de Llegada -->
+<div id="tiempoLlegadaModal" class="modal">
+    <div class="modal-content">
+        <span class="close-tiempo-modal">&times;</span>
+        <h2>Pedido Confirmado</h2>
+        <p id="tiempoLlegadaTexto"></p>
+    </div>
+</div>
+    <footer class="footer">
+        <div class="footer_marco">
+            <div class="contenido">
+                <h4 class="subrayado-con-espacio">Contacto</h4>
+                <ul>
+                    <li>Número: 33333333</li>
+                    <li>Email: ggggg@.com</li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ul>
+            </div>
+            <div class="contenido">
+                <h4 class="subrayado-con-espacio">Medios de Pago</h4>
+                <ul>
+                    <li>Mercado Pago</li>
+                    <li>Visa</li>
+                    <li>Cabal</li>
+                    <li>Cuenta DNI</li>
+                    <li>American Express</li>
+                    <li>Naranja</li>
+                </ul>
+            </div>
+            <div class="contenido">
+                <h4 class="subrayado-con-espacio">Dirección</h4>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1640.6316951540614!2d-58.41488547228212!3d-34.673301336827514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccc86e57132bf%3A0xb5c44f60d347e696!2sClub%20Social%20y%20Deportivo%20Juventud%20Unida!5e0!3m2!1ses!2sar!4v1695193521077!5m2!1ses!2sar"
+                    width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

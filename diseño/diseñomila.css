@@ -273,7 +273,7 @@ button:hover {
     background-color: #e64a19;
 }
 
-/* Estilos específicos para el apartado de calidad */
+
 .maindos {
     padding: 2rem;
     background-color: #fff;
@@ -291,44 +291,6 @@ button:hover {
     border-bottom: 3px solid #ff5722;
     padding-bottom: 0.5rem;
     font-weight: 700;
-}
-
-.texto {
-    font-size: 1.1rem;
-    color: #333;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-}
-
-.seccion {
-    margin-bottom: 2.5rem;
-}
-
-.titulo-seccion {
-    font-size: 1.8rem;
-    color: #ff5722;
-    border-bottom: 2px solid #ff5722;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.blockquote {
-    border-left: 4px solid #ff5722;
-    padding-left: 1rem;
-    margin: 1.5rem 0;
-    font-style: italic;
-    color: #666;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    padding: 1rem;
-}
-
-.subrayado-con-espacio {
-    text-decoration: underline;
-    text-underline-offset: 7px;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #ff5100;
 }
 
 /* Responsive */
@@ -396,54 +358,6 @@ button:hover {
     }
 }
 
-
-
-
-
-
-/* Modo oscuro */
-body.dark-theme {
-    background-color: #333;
-    color: #f5f5f5;
-}
-
-body.dark-theme .header {
-    background-color: #000000;
-}
-
-body.dark-theme .titulo {
-    color: #ff8a65;
-}
-
-body.dark-theme .contenedor__carta {
-    background-color: #444;
-    border-color: #555;
-}
-
-body.dark-theme .btn {
-    background-color: #ff8a65;
-}
-
-body.dark-theme .footer {
-    background-color: #222;
-}
-
-body.dark-theme .subrayado-con-espacio {
-    text-decoration-color: #ff8a65;
-}
-
-body.dark-theme .nav-btn {
-    border: #000000;
-}
-
-body.dark-theme .modal-content{
-    color: #080808;
-}
-
-body.dark-theme .btn:hover {
-    background-color: #f10606;
-}
-
 /*estilos carritos*/
 .modal {
     display: none;
@@ -457,6 +371,7 @@ body.dark-theme .btn:hover {
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+    z-index:1000;
 }
 
 .modal-content {
@@ -509,28 +424,6 @@ body.dark-theme .btn:hover {
     margin-top: 20px;
 }
 
-/* Cuadro del cronómetro que aparecerá en la pantalla */
-#cronometro-cuadro {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    font-size: 18px;
-    text-align: center;
-}
-
-#cronometro-tiempo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-
-
 /* Estilos de los precios */
 .carta__precio {
     font-size: 1.2em;
@@ -539,26 +432,32 @@ body.dark-theme .btn:hover {
     font-weight: bold;
 }
 
-/* Estilos del botón de cambio de tema */
-.toggle-theme-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    padding: 10px;
-    background-color: #ff5722;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+/* Estilo del modal de iniciar sesión y carrito */
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+}
+
+
+
+.close-tiempo-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-confirm-modal{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 16px;
 }
 
-.toggle-theme-btn:hover {
-    background-color: #e64a19;
-}
-
-/* Estilos para el modo oscuro */
-.dark-theme {
-    background-color: #121212;
-    color: #e0e0e0;
+.close-tiempo-modal:hover,
+.close-tiempo-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
