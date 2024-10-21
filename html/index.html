@@ -30,7 +30,9 @@
             </div>
         </nav>
     </header>
-    
+    <div id="temporizador" class="temporizador" style="display: none;">
+        <p>Tiempo restante para recibir el pedido: <span id="tiempoRestante"></span></p>
+    </div>
     <!-- Ventana del carrito -->
     <div id="carritoModal" class="modal">
         <div class="modal-content">
@@ -77,7 +79,7 @@
     <!-- Modal de Confirmar Pedido -->
 <div id="confirmarPedidoModal" class="modal">
     <div class="modal-content">
-        <span class="close-confirm-modal">&times;</span>
+        <span  id="closeConfirmModal" class="close-confirm-modal">&times;</span>
         <h2>Confirmar Pedido</h2>
         <form id="confirmarPedidoForm">
             <label for="nombre">Nombre:</label>
@@ -104,6 +106,20 @@
         </form>
     </div>
 </div>
+
+<!-- Toast de Producto Añadido -->
+<div id="toast" class="toast">Producto añadido al carrito</div>
+
+<!-- Modal de Resumen de Compra -->
+<div id="resumenCompraModal" class="modal">
+    <div class="modal-content">
+        <span class="close-resumen-modal">&times;</span>
+        <h2>Resumen de la Compra</h2>
+        <div id="detalle-compra"></div>
+        <button id="cerrarResumenBtn" class="btn">Cerrar</button>
+    </div>
+</div>
+
 
 <!-- Modal de Tiempo de Llegada -->
 <div id="tiempoLlegadaModal" class="modal">

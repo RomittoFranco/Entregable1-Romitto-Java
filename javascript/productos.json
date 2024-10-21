@@ -1,0 +1,44 @@
+[
+    {
+        "nombre": "Milanesa de Pollo",
+        "precio": 300,
+        "imagen": "../img/milanesaDePollo.jpeg",
+        "descripcion": "Milanesa jugosa y crujiente, preparada con pechuga de pollo de la mejor calidad."
+    },
+    {
+        "nombre": "Milanesa de Carne",
+        "precio": 350,
+        "imagen": "../img/milanesa de carne2.webp",
+        "descripcion": "Clásica milanesa hecha con cortes seleccionados de carne vacuna."
+    },
+    {
+        "nombre": "Milanesa de Ternera",
+        "precio": 400,
+        "imagen": "../img/milanesaDeTernera.jpg",
+        "descripcion": "Una opción premium, preparada con ternera de primera calidad, suave y deliciosa."
+    },
+    {
+        "nombre": "Milanesa Napolitana",
+        "precio": 450,
+        "imagen": "../img/milanesaNapoli.jpg",
+        "descripcion": "Con queso derretido y salsa de tomate, un clásico irresistible."
+    },
+    {
+        "nombre": "Milanesa Riojana",
+        "precio": 380,
+        "imagen": "../img/milanesaRiojana.jpeg",
+        "descripcion": "Milanesa con jamón, pimientos y huevo frito, al estilo riojano."
+    },
+    {
+        "nombre": "Milanesa de Cerdo",
+        "precio": 320,
+        "imagen": "../img/milanesa de cerdo.jpg",
+        "descripcion": "Milanesa de cerdo, con un sabor intenso y una textura crujiente única."
+    },
+    {
+        "nombre": "Milanesa Suiza",
+        "precio": 500,
+        "imagen": "../img/milanesaSuiza.jpg",
+        "descripcion": "Con un toque de queso suizo y especias, nuestra especialidad más solicitada."
+    }
+]

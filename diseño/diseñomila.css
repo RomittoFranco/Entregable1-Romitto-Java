@@ -461,3 +461,58 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+
+
+.temporizador {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f1c40f;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+}
+/* Toast */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+    font-size: 17px;
+}
+
+.toast.show {
+    visibility: visible;
+    animation: fadeInOut 3s;
+}
+
+
+
+/* Modal Resumen de Compra */
+
+
+.close-resumen-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-resumen-modal:hover,
+.close-resumen-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

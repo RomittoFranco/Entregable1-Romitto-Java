@@ -1,20 +1,22 @@
-
-const productos = [
-    { nombre: "Milanesa de Pollo", precio: 300, imagen: "../img/milanesaDePollo.jpeg", descripcion: "Milanesa jugosa y crujiente, preparada con pechuga de pollo de la mejor calidad." },
-    { nombre: "Milanesa de Carne", precio: 350, imagen: "../img/milanesa de carne2.webp", descripcion: "Clásica milanesa hecha con cortes seleccionados de carne vacuna." },
-    { nombre: "Milanesa de Ternera", precio: 400, imagen: "../img/milanesaDeTernera.jpg", descripcion: "Una opción premium, preparada con ternera de primera calidad, suave y deliciosa." },
-    { nombre: "Milanesa Napolitana", precio: 450, imagen: "../img/milanesaNapoli.jpg", descripcion: "Con queso derretido y salsa de tomate, un clásico irresistible." },
-    { nombre: "Milanesa Riojana", precio: 380, imagen: "../img/milanesaRiojana.jpeg", descripcion: "Milanesa con jamón, pimientos y huevo frito, al estilo riojano." },
-    { nombre: "Milanesa de Cerdo", precio: 320, imagen: "../img/milanesa de cerdo.jpg", descripcion: "Milanesa de cerdo, con un sabor intenso y una textura crujiente única." },
-    { nombre: "Milanesa Suiza", precio: 500, imagen: "../img/milanesaSuiza.jpg", descripcion: "Con un toque de queso suizo y especias, nuestra especialidad más solicitada." },
-];
-
-
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 let total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
 
+// Función para cargar productos usando fetch y mostrar errores con try-catch-finally
+async function cargarProductos() {
+    try {
+        const response = await fetch('../javascript/productos.json');
+        if (!response.ok) {
+            throw new Error('No se pudo cargar el archivo JSON de productos');
+        }
+        const productos = await response.json();
+        renderizarProductos(productos);
+    } catch (error) {
+        console.error('Error al cargar productos:', error);
+    }
+}
 
-function renderizarProductos() {
+// Función para renderizar productos en la página
+function renderizarProductos(productos) {
     const contenedorProductos = document.querySelector(".main");
     contenedorProductos.innerHTML = "";
     productos.forEach((producto, index) => {
@@ -26,7 +28,7 @@ function renderizarProductos() {
                         <h3>${producto.nombre}</h3>
                         <p>${producto.descripcion}</p>
                         <p class="carta__precio">Precio: $${producto.precio}</p>
-                        <button class="btn" onclick="agregarAlCarrito(${index})">Agregar al carrito</button>
+                        <button class="btn" onclick="agregarAlCarrito(${index}, '${producto.nombre}', ${producto.precio})">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
@@ -35,43 +37,28 @@ function renderizarProductos() {
     });
 }
 
-
-const modal = document.getElementById("carritoModal");
-const btnAbrirCarrito = document.getElementById("abrir-carrito");
-const btnCerrarModal = document.querySelector(".close");
-const confirmarPedidoModal = document.getElementById("confirmarPedidoModal");
-const closeConfirmModal = document.querySelector(".close-confirm-modal");
-
-// Abrir el carrito al hacer clic en "Ver Carrito"
-btnAbrirCarrito.addEventListener("click", () => {
-    modal.style.display = "block";
-});
-
-// Cerrar el carrito al hacer clic en la 'X'
-btnCerrarModal.addEventListener("click", () => {
-    modal.style.display = "none";
-});
-
-// Cerrar el carrito al hacer clic fuera del contenido del carrito
-window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-});
-
-// Funcion para agregar un producto al carrito
-function agregarAlCarrito(index) {
-    const producto = productos[index];
-    const productoEnCarrito = carrito.find(item => item.nombre === producto.nombre);
+// Función para agregar un producto al carrito
+function agregarAlCarrito(index, nombre, precio) {
+    const productoEnCarrito = carrito.find(item => item.nombre === nombre);
     if (productoEnCarrito) {
         productoEnCarrito.cantidad++;
     } else {
-        carrito.push({ ...producto, cantidad: 1 });
+        carrito.push({ nombre, precio, cantidad: 1 });
     }
     actualizarCarrito();
+    mostrarToast(); // Mostrar el toast cuando se añade un producto
 }
 
-// Funcion para actualizar el carrito
+// Función para mostrar el toast cuando se añade un producto al carrito
+function mostrarToast() {
+    const toast = document.getElementById("toast");
+    toast.className = "toast show";
+    setTimeout(() => {
+        toast.className = toast.className.replace("show", "");
+    }, 3000); // El toast desaparecerá después de 3 segundos
+}
+
+// Función para actualizar el carrito
 function actualizarCarrito() {
     const listaCarrito = document.getElementById("carrito-lista");
     const precioTotal = document.getElementById("precio-total");
@@ -89,12 +76,12 @@ function actualizarCarrito() {
     });
 
     total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
-    precioTotal.textContent = `Precio Total: $${total}`;
+    precioTotal.textContent = `Precio Total: $${total.toFixed(2)}`;
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-// Funcion para eliminar un producto del carrito
+// Función para eliminar un producto del carrito
 function eliminarDelCarrito(index) {
     carrito.splice(index, 1);
     actualizarCarrito();
@@ -116,20 +103,20 @@ document.getElementById("vaciar-carrito").addEventListener("click", () => {
     actualizarCarrito();
 });
 
-// Renderizar productos y carrito al cargar la pagina
+// Renderizar productos y carrito al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-    renderizarProductos();
+    cargarProductos();
     actualizarCarrito();
 });
 
-
+// Modal de login
 const loginModal = document.getElementById('loginModal');
 const loginForm = document.getElementById('loginForm');
 const loginError = document.getElementById('loginError');
 const btnLogin = document.getElementById('btnLogin');
 const closeModal = document.querySelector('.close-modal');
 
-// Mostrar modal de inicio de sesion
+// Mostrar modal de inicio de sesión
 btnLogin.addEventListener('click', function(event) {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
         event.preventDefault();
@@ -144,37 +131,31 @@ closeModal.onclick = function() {
     loginModal.style.display = 'none';
 }
 
-// Verificar si ya esta logueado al cargar la pagina
+// Verificar si ya está logueado al cargar la página
 if (localStorage.getItem('isLoggedIn') === 'true') {
     mostrarSesionIniciada();
 }
 
-// Manejo del formulario de inicio de sesion
+// Manejo del formulario de inicio de sesión
 loginForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     if (email === 'franco@gmail.com' && password === 'hola123') {
-        // Guardar el estado de inicio de sesión en localstorage
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userEmail', email);
-
-        // Ocultar el modal y actualizar el boton
         loginModal.style.display = 'none';
         mostrarSesionIniciada();
     } else {
-        // Mostrar el mensaje de error si las credenciales son incorrectas
         loginError.style.display = 'block';
     }
 });
 
-// Función para mostrar que la sesión esta iniciada
 function mostrarSesionIniciada() {
     btnLogin.textContent = 'Cerrar Sesión';
 }
 
-// Funcion para cerrar la sesion
 function cerrarSesion() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userEmail');
@@ -198,59 +179,159 @@ document.getElementById("enviarPedidoBtn").addEventListener("click", () => {
     }
 });
 
-// Funcion para mostrar el modal de confirmación de pedido
+// Función para mostrar el modal de confirmación de pedido
 function mostrarConfirmacionPedido() {
+    const confirmarPedidoModal = document.getElementById("confirmarPedidoModal");
     confirmarPedidoModal.style.display = 'block';
-    document.getElementById('pedidoTotal').textContent = total;
+    document.getElementById('pedidoTotal').textContent = total.toFixed(2); // Actualizar total con 2 decimales
 }
 
-// Cerrar el modal de confirmacion de pedido
+// Cerrar el modal de confirmación de pedido
+const closeConfirmModal = document.querySelector(".close-confirm-modal");
 closeConfirmModal.addEventListener("click", () => {
+    const confirmarPedidoModal = document.getElementById("confirmarPedidoModal");
     confirmarPedidoModal.style.display = 'none';
 });
 
-// Manejo del formulario de confirmacion de pedido
+// Modal de Resumen de Compra
+const resumenCompraModal = document.getElementById("resumenCompraModal");
+const closeResumenModal = document.querySelector(".close-resumen-modal");
+const cerrarResumenBtn = document.getElementById("cerrarResumenBtn");
+
+// Función para mostrar el resumen de compra
+function mostrarResumenCompra() {
+    const detalleCompra = document.getElementById("detalle-compra");
+
+    
+    total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+    // Asegurarse de que hay productos en el carrito para mostrar
+    if (carrito.length === 0) {
+        detalleCompra.innerHTML = "<p>No hay productos en el carrito.</p>";
+        return;
+    }
+
+    // Mostrar los productos del carrito antes de vaciarlo
+    detalleCompra.innerHTML = `
+        <h3>Datos del Cliente:</h3>
+        <p><strong>Nombre:</strong> ${document.getElementById("nombre").value}</p>
+        <p><strong>Dirección:</strong> ${document.getElementById("direccion").value}</p>
+        <p><strong>Teléfono:</strong> ${document.getElementById("telefono").value}</p>
+        <p><strong>Método de Pago:</strong> ${document.getElementById("metodoPago").value}</p>
+
+        <h3>Productos:</h3>
+        <ul>
+            ${carrito.map(item => `<li>${item.nombre} - ${item.cantidad} x $${item.precio}</li>`).join('')}
+        </ul>
+        <p><strong>Total:</strong> $${total.toFixed(2)}</p>
+    `;
+
+    resumenCompraModal.style.display = "block";
+
+    // Vaciar el carrito después de 10 segundos
+    setTimeout(() => {
+        carrito = [];
+        actualizarCarrito();  // Actualiza el carrito en la UI y en localStorage
+        console.log("Carrito vaciado después de 10 segundos.");
+    }, 10000); // 10 segundos
+}
+
+// Cerrar el modal de resumen de compra
+closeResumenModal.onclick = () => {
+    resumenCompraModal.style.display = "none";
+};
+
+cerrarResumenBtn.onclick = () => {
+    resumenCompraModal.style.display = "none";
+};
+
+// Al confirmar el pedido, mostrar el resumen y vaciar el carrito
 document.getElementById("confirmarPedidoForm").addEventListener("submit", function(event) {
     event.preventDefault();
+    const confirmarPedidoModal = document.getElementById("confirmarPedidoModal");
     confirmarPedidoModal.style.display = 'none';
-    mostrarTiempoLlegada();
+    
+    // Mostrar el resumen de la compra antes de vaciar el carrito
+    mostrarResumenCompra();  
 });
 
+// Selección del botón y del modal
+const modal = document.getElementById("carritoModal");
+const btnAbrirCarrito = document.getElementById("abrir-carrito");
+const btnCerrarModal = document.querySelector(".close");
 
-
-
-// Función para mostrar el tiempo de llegada aleatorio
-function mostrarTiempoLlegada() {
-    const tiempoAleatorio = generarTiempoAleatorio();
-    
-    // Mostrar el modal con el tiempo de llegada
-    const modalTiempo = document.getElementById("tiempoLlegadaModal");
-    const tiempoLlegadaTexto = document.getElementById("tiempoLlegadaTexto");
-    
-    tiempoLlegadaTexto.textContent = `Tiempo aproximado de llegada: ${tiempoAleatorio}`;
-    modalTiempo.style.display = "block";
-}
-
-// Funcion para generar un tiempo de llegada aleatorio entre 15 y 60 minutos
-function generarTiempoAleatorio() {
-    const minutos = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
-    const horas = Math.floor(minutos / 60);
-    const minutosRestantes = minutos % 60;
-
-    return `${horas.toString().padStart(2, '0')}:${minutosRestantes.toString().padStart(2, '0')}:00`;
-}
-
-// Cerrar el modal de tiempo de llegada
-const closeTiempoModal = document.querySelector(".close-tiempo-modal");
-closeTiempoModal.addEventListener("click", () => {
-    const modalTiempo = document.getElementById("tiempoLlegadaModal");
-    modalTiempo.style.display = "none";
+// Evento para abrir el carrito al hacer clic en "Ver Carrito"
+btnAbrirCarrito.addEventListener("click", () => {
+    modal.style.display = "block";
 });
 
-// Cerrar el modal si se hace clic fuera del contenido del modal
-window.onclick = function(event) {
-    const modalTiempo = document.getElementById("tiempoLlegadaModal");
-    if (event.target === modalTiempo) {
-        modalTiempo.style.display = 'none';
+// Evento para cerrar el carrito al hacer clic en la 'X'
+btnCerrarModal.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Cerrar el carrito al hacer clic fuera del contenido del carrito
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
     }
+});
+
+// Variable para saber si hay un pedido en curso
+let pedidoEnCurso = false;
+
+// Selecciona los elementos necesarios
+const tiempoRestanteElemento = document.getElementById("tiempoRestante");
+const temporizadorDiv = document.getElementById("temporizador");
+const enviarPedidoBtn = document.getElementById("enviarPedidoBtn");
+
+// Función para generar tiempo aleatorio entre 5 minutos y 1 hora (en segundos)
+function generarTiempoAleatorio() {
+    const minTiempo = 5 * 60; 
+    const maxTiempo = 60 * 60; 
+    return Math.floor(Math.random() * (maxTiempo - minTiempo + 1)) + minTiempo;
 }
+
+// Función para iniciar el temporizador
+function iniciarTemporizador(segundos) {
+    let tiempoRestante = segundos;
+    temporizadorDiv.style.display = "block"; // Muestra el temporizador
+    pedidoEnCurso = true;  // Marca que un pedido está en curso
+    enviarPedidoBtn.disabled = true;  // Desactiva el botón de enviar pedido
+
+    const intervalo = setInterval(() => {
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = tiempoRestante % 60;
+
+        // Actualiza el texto del temporizador
+        tiempoRestanteElemento.textContent = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+        if (tiempoRestante <= 0) {
+            clearInterval(intervalo);
+            temporizadorDiv.style.display = "none";  // Oculta el temporizador
+            pedidoEnCurso = false;  // Marca que ya no hay un pedido en curso
+            enviarPedidoBtn.disabled = false;  // Vuelve a activar el botón de enviar pedido
+        } else {
+            tiempoRestante--;
+        }
+    }, 1000); // Actualiza cada segundo
+}
+
+// Función para mostrar el resumen y empezar el temporizador
+document.getElementById("confirmarPedidoForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Verificar si ya hay un pedido en curso
+    if (pedidoEnCurso) {
+        alert("Ya tienes un pedido en curso. Espera a que se complete antes de realizar otro.");
+        return;
+    }
+
+    confirmarPedidoModal.style.display = 'none';
+    
+    mostrarResumenCompra();  // Muestra el resumen de la compra
+
+    // Iniciar temporizador con tiempo aleatorio
+    const tiempoAleatorio = generarTiempoAleatorio();
+    iniciarTemporizador(tiempoAleatorio);
+});
